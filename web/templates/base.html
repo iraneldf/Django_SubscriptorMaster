@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+	Indus by TEMPLATE STOCK
+	templatestock.co @templatestock
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+
+<html lang="en" class="no-js">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <title>{{config.business_name}}</title>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/et-lineicon.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,400italic,500italic,700' rel='stylesheet' type='text/css'>
+        <!--[if IE]>
+        	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+	</head>
+	<body>
+
+        <!-- Preloader -->
+        <div class="animationload">
+            <div class="loader">
+                Loading...
+            </div>
+        </div> 
+        <!-- End Preloader -->
+
+        <!-- =========================
+                 HOME
+        ========================== -->
+
+		{% block content %}{% endblock content %}
+            
+        <!-- JAVASCRIPTS -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/jquery.lwtCountdown-1.0.js' %}"></script>
+        <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+        <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+        <script src="{% static 'js/animated.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+	</body>
+</html>
