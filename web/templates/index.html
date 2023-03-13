@@ -9,7 +9,9 @@
                 <div class="row">
                     <div class="logo">
                         <img src="{{config.logo.url}}" alt="logo">
-                        <p>{{config.business_name}}</p>
+                        {% if config.business_name_active %}
+                            <p>{{config.business_name}}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div> <!-- END COUNTDOWN -->

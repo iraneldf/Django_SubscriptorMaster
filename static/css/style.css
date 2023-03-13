@@ -372,6 +372,7 @@ textarea {
 }
 .social li{
     margin: 0px 10px !important;
+    cursor: pointer;
 }
 li.social-btn {
     width: 32px;
@@ -396,7 +397,7 @@ li.social-btn {
     margin-left: -30px;
 }
 .social-btn a{
-    padding: 10px
+    padding: 10px;
 }
 .social-btn a{
     font-size: 15px;
