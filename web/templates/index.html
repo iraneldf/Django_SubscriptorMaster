@@ -1,22 +1,23 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <section id="home">
-    <div class="content">
-        <div id="large-header" class="large-header">
-            <canvas id="demo-canvas"></canvas>
-            <div id="countdown_dashboard" class="home-main container">
-                <div class="row">
-                    <div class="logo">
-                        <img src="{{config.logo.url}}" alt="logo">
-                        {% if config.business_name_active %}
-                            <p>{{config.business_name}}</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div> <!-- END COUNTDOWN -->
-        </div> <!-- LARGE HEADER -->
-    </div> <!-- END CONTENT -->
+  <div class="content">
+    <div id="large-header" class="large-header">
+      <canvas id="demo-canvas"></canvas>
+      <div id="countdown_dashboard" class="home-main container">
+        <div class="row">
+          <div class="logo">
+            <img src="{{config.logo.url}}" alt="logo" />
+            {% if config.business_name_active %}
+            <p>{{config.business_name}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <!-- END COUNTDOWN -->
+    </div>
+    <!-- LARGE HEADER -->
+  </div>
+  <!-- END CONTENT -->
 </section>
 
 <!-- =========================
@@ -24,59 +25,75 @@
 ========================== -->
 
 <section class="newsletter">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div class="main_content">
-                    <h4><strong>{{config.suscribe_title}}</strong></h4>
-                    <p>{{config.suscribe_text}}</p>
-                    <div id="" class="confirm-message"></div>
-                    <form action="/suscribe/" method="post">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input class="form-control news-input" type="text" name="subscribe_email" id="subscribe_email" placeholder="Email" required/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-custom news-btn" id="" name="subscribe_btn"><span>Suscribirse</span></button>
-                            </span>
-                        </div><!-- /input-group -->
-                    </form><!-- END FORM -->
-                </div>  
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="main_content">
+          <h4><strong>{{config.suscribe_title}}</strong></h4>
+          <p>{{config.suscribe_text}}</p>
+          <div id="" class="confirm-message"></div>
+          <form id="formulario" action="/suscribe/" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+              <input
+                class="form-control news-input"
+                type="text"
+                name="subscribe_contact"
+                id="subscribe_contact"
+                placeholder="Email o Teléfono Móvil"
+                required
+              />
+              <span class="input-group-btn">
+                <button
+                  class="btn btn-custom news-btn"
+                  id=""
+                  name="subscribe_btn"
+                >
+                  <span>Suscribirse</span>
+                </button>
+              </span>
             </div>
+            <!-- /input-group -->
+          </form>
+          <!-- END FORM -->
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
 <footer class="footer">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="social list-inline">
-                    {% if config.facebook %}
-                    <li class="social-btn" id="fb"><a href="{{config.facebook}}"><i class="fa fa-facebook"></i></a></li>
-                    {% endif %}
-                    
-                    {% if config.twitter %}
-                    <li class="social-btn" id="tw"><a href="{{config.twitter}}"><i class="fa fa-twitter"></i></a></li>
-                    {% endif %}
-                    
-                    {% if config.telegram %}
-                    <li class="social-btn" id="tbl"><a href="{{config.telegram}}"><i class="fa fa-tumblr"></i></a></li>
-                    {% endif %}
-                    
-                    {% if config.pinterest %}
-                    <li class="social-btn" id="pin"><a href="{{config.pinterest}}"><i class="fa  fa-pinterest"></i></a></li>
-                    {% endif %}
-                    
-                    {% if config.flirk %}
-                    <li class="social-btn" id="flk"><a href="{{config.flirk}}"><i class="fa  fa-flickr"></i></a></li>
-                    {% endif %}
-                
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <p class="copyright">Copyright© 2023 By GoDjango.</p>
-        </div>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="social list-inline">
+          {% if config.facebook %}
+          <li class="social-btn" id="fb">
+            <a href="{{config.facebook}}"><i class="fa fa-facebook"></i></a>
+          </li>
+          {% endif %} {% if config.twitter %}
+          <li class="social-btn" id="tw">
+            <a href="{{config.twitter}}"><i class="fa fa-twitter"></i></a>
+          </li>
+          {% endif %} {% if config.telegram %}
+          <li class="social-btn" id="tbl">
+            <a href="{{config.telegram}}"><i class="fa fa-tumblr"></i></a>
+          </li>
+          {% endif %} {% if config.pinterest %}
+          <li class="social-btn" id="pin">
+            <a href="{{config.pinterest}}"><i class="fa fa-pinterest"></i></a>
+          </li>
+          {% endif %} {% if config.flirk %}
+          <li class="social-btn" id="flk">
+            <a href="{{config.flirk}}"><i class="fa fa-flickr"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
+    <div class="row">
+      <p class="copyright">Copyright© 2023 By GoDjango.</p>
+    </div>
+  </div>
 </footer>
 {% endblock content %}

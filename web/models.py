@@ -38,14 +38,14 @@ class Suscriptor(models.Model):
     email = models.EmailField(
         _("Email"), max_length=254, unique=True, null=True, blank=True)
     phone = models.CharField(
-        _("Telefono"), max_length=20, null=True, blank=True)
+        _("Telefono"), max_length=15, null=True, blank=True)
 
     class Meta:
         verbose_name = _("Subscriptor")
         verbose_name_plural = _("Subscriptores")
 
     def __str__(self):
-        return self.email
+        return self.email or self.phone
 
     def get_absolute_url(self):
         return reverse("suscriptor_detail", kwargs={"pk": self.pk})
@@ -61,7 +61,22 @@ class New(models.Model):
         verbose_name_plural = _("Noticias")
 
     def __str__(self):
-        return self.news
+        return self.title
 
     def get_absolute_url(self):
         return reverse("new_detail", kwargs={"pk": self.pk})
+
+
+class SMS(models.Model):
+
+    sms = models.TextField(_("sms"))
+
+    class Meta:
+        verbose_name = _("SMS")
+        verbose_name_plural = _("SMSs")
+
+    def __str__(self):
+        return self.sms[:20]
+
+    def get_absolute_url(self):
+        return reverse("SMS_detail", kwargs={"pk": self.pk})

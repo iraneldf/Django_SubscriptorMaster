@@ -128,11 +128,11 @@ else:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static')
     ]
-# Base url to serve media files  
-MEDIA_URL = '/media/'  
-  
-# Path where media is stored  
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -142,6 +142,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'godjango.automail@gmail.com'
-EMAIL_HOST_PASSWORD = 'bakhyhnfmfihhqvg ' #past the key or password app here
+EMAIL_HOST_PASSWORD = 'bakhyhnfmfihhqvg '  # past the key or password app here
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+SMS_DIR = os.path.join(BASE_DIR, 'sms/')
