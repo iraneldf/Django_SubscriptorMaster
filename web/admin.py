@@ -55,15 +55,20 @@ class ConfigAdmin(SingletonModelAdmin):
 @admin.register(New)
 class NewAdmin(admin.ModelAdmin):
     list_display = ['title']
+    search_fields = ['title', 'news']
+    list_filter = ['title', 'news']
     actions = [enviar_email]
 
 
 @admin.register(Suscriptor)
 class SuscriptorAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['email', 'phone']
+    list_filter = ['email', 'phone']
 
 
 @admin.register(SMS)
 class SMSAdmin(admin.ModelAdmin):
     list_display = ['sms', 'longitud']
+    search_fields = ['sms']
+    list_filter = ['sms']
     actions = [enviar_sms]
