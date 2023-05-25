@@ -5,25 +5,39 @@ from solo.models import SingletonModel
 from ckeditor.fields import RichTextField
 
 # Create your models here.
+
+
 class Config(SingletonModel):
 
-    business_name = models.CharField(_("Nombre de negocio"), max_length=50, blank=True, null=True)
-    business_name_active = models.BooleanField(_("Nombre de negocio activo"), default=False)
-    logo = models.ImageField(_("Logo"), upload_to='config/', blank=True, null=True)
-    facebook = models.URLField(_("facebook"), max_length=240, blank=True, null=True)
-    twitter = models.URLField(_("twitter"), max_length=240, blank=True, null=True)
-    telegram = models.URLField(_("telegram"), max_length=240, blank=True, null=True)
-    pinterest = models.URLField(_("pinterest"), max_length=240, blank=True, null=True)
+    business_name = models.CharField(
+        _("Nombre de negocio"), max_length=50, blank=True, null=True)
+    business_name_active = models.BooleanField(
+        _("Nombre de negocio activo"), default=False)
+    logo = models.ImageField(
+        _("Logo"), upload_to='config/', blank=True, null=True)
+    facebook = models.URLField(
+        _("facebook"), max_length=240, blank=True, null=True)
+    twitter = models.URLField(
+        _("twitter"), max_length=240, blank=True, null=True)
+    telegram = models.URLField(
+        _("telegram"), max_length=240, blank=True, null=True)
+    pinterest = models.URLField(
+        _("pinterest"), max_length=240, blank=True, null=True)
     flirk = models.URLField(_("flirk"), max_length=240, blank=True, null=True)
-    suscribe_title = models.CharField(_("Titulo suscripción"), max_length=150, blank=True, null=True)
-    suscribe_text = models.TextField(_("Texto suscripción"),blank=True, null=True)
+    suscribe_title = models.CharField(
+        _("Titulo suscripción"), max_length=150, blank=True, null=True)
+    suscribe_text = models.TextField(
+        _("Texto suscripción"), blank=True, null=True)
 
     class Meta:
         verbose_name = _("Configuración")
 
+
 class Suscriptor(models.Model):
 
-    email = models.EmailField(_("Email"), max_length=254, unique=True)
+    email = models.EmailField(
+        _("Email"), max_length=254, unique=True, null=True, blank=True)
+    phone = models.CharField(_("phone"), max_length=20, null=True, blank=True)
 
     class Meta:
         verbose_name = _("Subscriptor")
@@ -34,6 +48,7 @@ class Suscriptor(models.Model):
 
     def get_absolute_url(self):
         return reverse("suscriptor_detail", kwargs={"pk": self.pk})
+
 
 class New(models.Model):
 
