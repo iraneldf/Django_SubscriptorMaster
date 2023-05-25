@@ -37,7 +37,8 @@ class Suscriptor(models.Model):
 
     email = models.EmailField(
         _("Email"), max_length=254, unique=True, null=True, blank=True)
-    phone = models.CharField(_("phone"), max_length=20, null=True, blank=True)
+    phone = models.CharField(
+        _("Telefono"), max_length=20, null=True, blank=True)
 
     class Meta:
         verbose_name = _("Subscriptor")
