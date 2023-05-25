@@ -71,6 +71,10 @@ class SMS(models.Model):
 
     sms = models.TextField(_("sms"))
 
+    @property
+    def longitud(self):
+        return len(self.sms)
+
     class Meta:
         verbose_name = _("SMS")
         verbose_name_plural = _("SMSs")

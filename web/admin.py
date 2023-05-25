@@ -40,4 +40,5 @@ class SuscriptorAdmin(admin.ModelAdmin):
 
 @admin.register(SMS)
 class SMSAdmin(admin.ModelAdmin):
+    list_display = ['sms', 'longitud']
     pass
