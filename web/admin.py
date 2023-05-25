@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from solo.admin import SingletonModelAdmin
 from .models import Config, New, Suscriptor, SMS
+import os
 
 
 @admin.action(description='Enviar noticia a usuarios subscritos')
@@ -18,6 +19,30 @@ def enviar_email(modeladmin, request, queryset):
 
         send_mail(subject, '', email_from,
                   recipient_list=recipient_list, html_message=message)
+
+
+@admin.action(description='Enviar noticia a usuarios subscritos')
+def enviar_sms(modeladmin, request, queryset):
+    numbers = Suscriptor.objects.exclude(phone__isnull=True)
+    sms_dir = settings.SMS_DIR
+    print(numbers)
+    print(sms_dir)
+    print(queryset)
+
+    for number in numbers:
+        for sms in queryset:
+            nombre_archivo = f'{number.phone}__{sms.pk}.txt.tmp'
+            ruta_completa = os.path.join(sms_dir, nombre_archivo)
+
+            archivo = open(ruta_completa, "w")
+
+            # para que respete la cantidad de espacios en blanco
+            [archivo.write(linea) for linea in sms.sms.split('\n')]
+
+            archivo.close()
+
+            os.remove(ruta_completa.replace('.tmp', ''))
+            os.rename(ruta_completa, ruta_completa.replace('.tmp', ''))
 
 # Register your models here.
 
@@ -41,4 +66,4 @@ class SuscriptorAdmin(admin.ModelAdmin):
 @admin.register(SMS)
 class SMSAdmin(admin.ModelAdmin):
     list_display = ['sms', 'longitud']
-    pass
+    actions = [enviar_sms]

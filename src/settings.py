@@ -146,4 +146,5 @@ EMAIL_HOST_PASSWORD = 'bakhyhnfmfihhqvg '  # past the key or password app here
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-SMS_DIR = os.path.join(BASE_DIR, 'sms/')
+SMS_DIR = os.path.join(BASE_DIR, 'sms')
+os.makedirs(SMS_DIR, exist_ok=True)
