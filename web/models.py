@@ -69,7 +69,7 @@ class New(models.Model):
 
 class SMS(models.Model):
 
-    sms = models.TextField(_("sms"))
+    sms = models.TextField(_("sms"), max_length=160)
 
     @property
     def longitud(self):

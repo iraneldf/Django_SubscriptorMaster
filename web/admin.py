@@ -41,7 +41,6 @@ def enviar_sms(modeladmin, request, queryset):
 
             archivo.close()
 
-            os.remove(ruta_completa.replace('.tmp', ''))
             os.rename(ruta_completa, ruta_completa.replace('.tmp', ''))
 
 # Register your models here.

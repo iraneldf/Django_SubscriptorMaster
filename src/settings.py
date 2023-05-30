@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-xi!-2413oe9px^ocqa)h$6j-k$5o7)+-&hpsqgw&j18@2s8+f^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,13 @@ INSTALLED_APPS = [
     'web',
     'django_cleanup.apps.CleanupConfig',
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 'full', 
+        'width': 'full', 
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
