@@ -25,8 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xi!-2413oe9px^ocqa)h$6j-k$5o7)+-&hpsqgw&j18@2s8+f^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = False
+CSRF_TRUSTED_ORIGINS = ["*"]
 ALLOWED_HOSTS = ['*']
 
 
@@ -52,6 +52,9 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+JAZZMIN_SETTINGS = {
+    "copyright": "By GoDjango.",
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -147,9 +150,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'godjango.automail@gmail.com'
-EMAIL_HOST_PASSWORD = 'bakhyhnfmfihhqvg '  # past the key or password app here
+DEFAULT_FROM_EMAIL = 'no-reply@godjango.dev'
+EMAIL_HOST = 'mail0.godjango.dev'
+EMAIL_HOST_USER = 'no-reply@godjango.dev'
+EMAIL_HOST_PASSWORD = '-|aVSE,Wc6\hpS5HJdSB1oCRcLDf7tQF$d)T$OLr&odYB1v946mcOb(ZPjJ1E>oV'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
