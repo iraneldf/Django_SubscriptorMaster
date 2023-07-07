@@ -1,9 +1,8 @@
+import os
+
+from django.conf import settings
 from django.contrib import admin
 from django.core.mail import send_mail
-from django.conf import settings
-from solo.admin import SingletonModelAdmin
-from .models import Config, New, Suscriptor, SMS
-import os
 
 
 @admin.action(description='Enviar noticia a usuarios subscritos')
@@ -19,6 +18,35 @@ def enviar_email(modeladmin, request, queryset):
 
         send_mail(subject, '', email_from,
                   recipient_list=recipient_list, html_message=message)
+
+
+import json
+
+from django.contrib import admin, messages
+from solo.admin import SingletonModelAdmin
+
+from .models import Config, New, Suscriptor, SMS
+
+
+# Django-sheduler
+@admin.action(description='Enviar noticia a usuarios subscritos')
+def enviar_email_wrapper(modeladmin, request, queryset):
+    # Crear un diccionario de Python que represente los datos que deseas codificar en formato JSON
+    datos = []
+    for q in queryset:
+        datos.append({
+            'titulo': q.title,
+            'noticia': q.news,
+        })
+    print(datos)
+    with open('news.json', 'w') as archivo:
+        for diccionario in datos:
+            json.dump(diccionario, archivo)
+            archivo.write('\n')
+
+    # Imprimir el objeto JSON codificado
+
+    messages.info(request, 'Tarea ejecutandose en segundo plano')
 
 
 @admin.action(description='Enviar noticia a usuarios subscritos')
@@ -43,6 +71,20 @@ def enviar_sms(modeladmin, request, queryset):
 
             os.rename(ruta_completa, ruta_completa.replace('.tmp', ''))
 
+    datos = []
+    for q in queryset:
+        datos.append({
+            'pk': q.pk,
+            'sms': q.sms,
+        })
+    with open('sms.json', 'w') as archivo:
+        for diccionario in datos:
+            json.dump(diccionario, archivo)
+            archivo.write('\n')
+
+    messages.info(request, 'Tarea ejecutandose en segundo plano')
+
+
 # Register your models here.
 
 
@@ -56,7 +98,8 @@ class NewAdmin(admin.ModelAdmin):
     list_display = ['title']
     search_fields = ['title', 'news']
     list_filter = ['title', 'news']
-    actions = [enviar_email]
+
+    actions = [enviar_email_wrapper]
 
 
 @admin.register(Suscriptor)
