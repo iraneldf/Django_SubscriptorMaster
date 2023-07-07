@@ -9,4 +9,3 @@ class WebConfig(AppConfig):
     def ready(self):
         from web.jobs import updater
         updater.start()
-

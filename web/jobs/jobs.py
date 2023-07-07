@@ -15,9 +15,10 @@ lock2 = filelock.FileLock("sms.json.lock")
 def ppp():
     try:
         # Abrir el archivo JSON en modo de lectura
-        with lock.acquire(timeout=12):
+        with lock.acquire(timeout=7):
             with open('news.json', 'r') as archivo:
                 # Leer cada diccionario del archivo
+
                 recipient_list = [
                     suscriptor.email for suscriptor in Suscriptor.objects.all()]
 
@@ -25,23 +26,36 @@ def ppp():
                 for linea in archivo:
                     diccionario = json.loads(linea)
                     subject = diccionario['titulo']
-                    message = f'Desde {config.business_name}:\n{diccionario["noticia"]}'
+                    nombre_negocio = f'Desde {config.business_name}' if config.business_name is not None else " "
+                    noticia = diccionario["noticia"]
+                    message = f'{nombre_negocio}:\n{noticia}'
                     email_from = settings.EMAIL_HOST_USER
-                    print(subject, email_from, recipient_list, message)
+                    count = 0
+                    for r in range(0, len(recipient_list), 100):
 
-                    try:
-                        send_mail(subject, '', email_from, recipient_list=recipient_list, html_message=message)
-                    except:
-                        print('no se envio')
+                        try:
+                            send_mail(subject, '', email_from, recipient_list=recipient_list[count:count + 100],
+                                      html_message=message)
+                            print(recipient_list[count:count + 100])
+                        except:
+                            print('no se envio')
 
-            # Cierra el archivo JSON
-            print('se elimina el json')
-            os.remove('news.json')
+                        else:
+                            print(f'Correo electrónico enviado a destinatarios {count + 1} a {count + 100}')
 
+                        count += 100
+
+        # Cierra el archivo JSON
+        print('se elimina el json')
+        os.remove('news.json')
 
     except FileNotFoundError as e:
         # Si el archivo no existe, imprimir un mensaje de error
         print("El archivo 'news.json' no se pudo encontrar.", e)
+
+    except filelock.Timeout as e:
+        print("El archivo 'news.json' aun esta en uso.", e)
+
 
 
     finally:
@@ -49,7 +63,7 @@ def ppp():
 
     try:
         # Abrir el archivo JSON en modo de lectura
-        with lock2.acquire(timeout=12):
+        with lock2.acquire(timeout=7):
             with open('sms.json', 'r') as archivo2:
                 # Leer cada diccionario del archivo
                 numbers = Suscriptor.objects.exclude(phone__isnull=True)
@@ -85,6 +99,9 @@ def ppp():
     except FileNotFoundError as e:
         # Si el archivo no existe, imprimir un mensaje de error
         print("El archivo 'sms.json' no se pudo encontrar.", e)
+
+    except filelock.Timeout as e:
+        print("El archivo 'sms.json' aun esta en uso.", e)
 
 
     finally:

@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 import sys
 from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from sched import scheduler
 
@@ -48,17 +49,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'web',
-
-    'django_apscheduler',
-
     'django_cleanup.apps.CleanupConfig',
 ]
 
 CKEDITOR_CONFIGS = {
     'default': {
-
-        'height': 'full',
-        'width': 'full',
 
         'height': 'full',
         'width': 'full',
