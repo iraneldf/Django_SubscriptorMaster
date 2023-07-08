@@ -5,3 +5,4 @@ python3 manage.py createsuperuser
 
 
 pip install django-apscheduler
+

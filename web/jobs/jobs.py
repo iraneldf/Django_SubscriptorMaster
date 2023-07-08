@@ -2,7 +2,7 @@ import json
 import os
 
 import filelock
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 from src import settings
 from web.models import Config, Suscriptor
@@ -26,28 +26,35 @@ def ppp():
                 for linea in archivo:
                     diccionario = json.loads(linea)
                     subject = diccionario['titulo']
-                    nombre_negocio = f'Desde {config.business_name}' if config.business_name is not None else " "
+
+                    if config.business_name is not None:
+                        nombre_negocio = f'Desde {config.business_name}:'
+                    else:
+                        nombre_negocio = ' '
+
                     noticia = diccionario["noticia"]
-                    message = f'{nombre_negocio}:\n{noticia}'
+                    message = f'{nombre_negocio}\n{noticia}'
                     email_from = settings.EMAIL_HOST_USER
                     count = 0
                     for r in range(0, len(recipient_list), 100):
 
                         try:
-                            send_mail(subject, '', email_from, recipient_list=recipient_list[count:count + 100],
-                                      html_message=message)
-                            print(recipient_list[count:count + 100])
-                        except:
-                            print('no se envio')
+
+                            bcc = recipient_list[count:count + 100]
+                            msg = EmailMessage(subject, message, email_from, [], bcc=bcc,
+                                               headers={'Reply-To': email_from})
+                            msg.content_subtype = "html"  # Main content is now text/html
+                            msg.send()
+
+                        except Exception as e:
+                            print('Error al enviar correo', e)
 
                         else:
                             print(f'Correo electrónico enviado a destinatarios {count + 1} a {count + 100}')
+                            print(recipient_list[count:count + 100])
 
                         count += 100
 
-        # Cierra el archivo JSON
-        print('se elimina el json')
-        os.remove('news.json')
 
     except FileNotFoundError as e:
         # Si el archivo no existe, imprimir un mensaje de error
@@ -56,7 +63,10 @@ def ppp():
     except filelock.Timeout as e:
         print("El archivo 'news.json' aun esta en uso.", e)
 
-
+    else:
+        # Cierra el archivo JSON
+        print('se elimina el json')
+        os.remove('news.json')
 
     finally:
         lock.release()
@@ -85,15 +95,13 @@ def ppp():
 
                         archivo3.close()
                         try:
-                            print(ruta_completa)
                             os.rename(ruta_completa, ruta_completa.replace('.tmp', ''))
-                            print(ruta_completa)
+
                         except Exception as e:
                             print('ya esxiste', e)
 
-            # Cierra el archivo JSON
-            print('se elimina el json')
-            os.remove('sms.json')
+                        else:
+                            print(ruta_completa)
 
 
     except FileNotFoundError as e:
@@ -103,6 +111,11 @@ def ppp():
     except filelock.Timeout as e:
         print("El archivo 'sms.json' aun esta en uso.", e)
 
+
+    else:
+        # Cierra el archivo JSON
+        print('se elimina el json')
+        os.remove('sms.json')
 
     finally:
         lock2.release()

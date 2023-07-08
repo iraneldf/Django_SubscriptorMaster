@@ -1,14 +1,14 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from solo.models import SingletonModel
-from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 
 
 class Config(SingletonModel):
-
     business_name = models.CharField(
         _("Nombre de negocio"), max_length=50, blank=True, null=True)
     business_name_active = models.BooleanField(
@@ -34,7 +34,6 @@ class Config(SingletonModel):
 
 
 class Suscriptor(models.Model):
-
     email = models.EmailField(
         _("Email"), max_length=254, unique=True, null=True, blank=True)
     phone = models.CharField(
@@ -52,7 +51,6 @@ class Suscriptor(models.Model):
 
 
 class New(models.Model):
-
     title = models.CharField(_("Titulo"), max_length=100)
     news = RichTextField('Noticias')
 
@@ -68,7 +66,6 @@ class New(models.Model):
 
 
 class SMS(models.Model):
-
     sms = models.TextField(_("sms"), max_length=160)
 
     @property
@@ -84,3 +81,9 @@ class SMS(models.Model):
 
     def get_absolute_url(self):
         return reverse("SMS_detail", kwargs={"pk": self.pk})
+
+
+class EmailImg(models.Model):
+    imagen = models.ImageField(
+        _("imagen"), upload_to='noticias/imagenes', blank=True, null=True)
+    noticia = models.ForeignKey(New, on_delete=models.CASCADE)

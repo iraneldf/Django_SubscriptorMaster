@@ -3,7 +3,7 @@ import json
 from django.contrib import admin, messages
 from solo.admin import SingletonModelAdmin
 
-from .models import Config, New, Suscriptor, SMS
+from .models import Config, New, Suscriptor, SMS, EmailImg
 
 
 # Django-sheduler
@@ -16,7 +16,6 @@ def enviar_email_wrapper(modeladmin, request, queryset):
             'titulo': q.title,
             'noticia': q.news,
         })
-    print(datos)
     with open('news.json', 'w') as archivo:
         for diccionario in datos:
             json.dump(diccionario, archivo)
@@ -51,12 +50,17 @@ class ConfigAdmin(SingletonModelAdmin):
     pass
 
 
+class ImgInLine(admin.StackedInline):
+    model = EmailImg
+
+
 @admin.register(New)
 class NewAdmin(admin.ModelAdmin):
     list_display = ['title']
     search_fields = ['title', 'news']
     list_filter = ['title', 'news']
     actions = [enviar_email_wrapper]
+    inlines = [ImgInLine]
 
 
 @admin.register(Suscriptor)

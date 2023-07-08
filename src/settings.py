@@ -17,14 +17,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-import os
-import sys
-from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from sched import scheduler
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -33,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xi!-2413oe9px^ocqa)h$6j-k$5o7)+-&hpsqgw&j18@2s8+f^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 CSRF_TRUSTED_ORIGINS = ["*"]
 ALLOWED_HOSTS = ['*']
 
@@ -166,3 +160,13 @@ SMS_DIR = os.path.join(BASE_DIR, 'sms')
 os.makedirs(SMS_DIR, exist_ok=True)
 
 SCHEDULER_TIME_SEC = 5
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": "100%",
+    }
+}
