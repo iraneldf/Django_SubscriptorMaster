@@ -29,6 +29,18 @@ class Config(SingletonModel):
     suscribe_text = models.TextField(
         _("Texto suscripción"), blank=True, null=True)
 
+    def get_business_name(self):
+        if self.business_name:
+            return self.business_name
+        else:
+            return ' '
+
+    def get_logo(self):
+        if self.logo:
+            return self.logo
+        else:
+            return ' '
+
     class Meta:
         verbose_name = _("Configuración")
 
@@ -53,6 +65,7 @@ class Suscriptor(models.Model):
 class New(models.Model):
     title = models.CharField(_("Titulo"), max_length=100)
     news = RichTextField('Noticias')
+    responder_a = models.EmailField()
 
     class Meta:
         verbose_name = _("Noticia")

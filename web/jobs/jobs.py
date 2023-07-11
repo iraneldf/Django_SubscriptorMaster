@@ -27,13 +27,14 @@ def ppp():
                     diccionario = json.loads(linea)
                     subject = diccionario['titulo']
 
-                    if config.business_name is not None:
-                        nombre_negocio = f'Desde {config.business_name}:'
+                    if config.business_name_active:
+                        nombre_negocio = f'Desde {config.get_business_name()}:'
                     else:
                         nombre_negocio = ' '
 
                     noticia = diccionario["noticia"]
                     message = f'{nombre_negocio}\n{noticia}'
+                    reply_to = diccionario["reply_to"]
                     email_from = settings.EMAIL_HOST_USER
                     count = 0
                     for r in range(0, len(recipient_list), 100):
@@ -42,7 +43,7 @@ def ppp():
 
                             bcc = recipient_list[count:count + 100]
                             msg = EmailMessage(subject, message, email_from, [], bcc=bcc,
-                                               headers={'Reply-To': email_from})
+                                               headers={'Reply-To': reply_to})
                             msg.content_subtype = "html"  # Main content is now text/html
                             msg.send()
 

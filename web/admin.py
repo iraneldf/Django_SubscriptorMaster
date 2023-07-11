@@ -15,6 +15,7 @@ def enviar_email_wrapper(modeladmin, request, queryset):
         datos.append({
             'titulo': q.title,
             'noticia': q.news,
+            'reply_to': q.responder_a
         })
     with open('news.json', 'w') as archivo:
         for diccionario in datos:
